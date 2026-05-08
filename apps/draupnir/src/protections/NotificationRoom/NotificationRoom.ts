@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Gnuxie <Gnuxie@protonmail.com>
 //
-// SPDX-License-Identifier: AFL-3.0
+// SPDX-License-Identifier: Apache-2.0
 
 import { Ok, Result } from "@gnuxie/typescript-result";
 import {
@@ -58,7 +58,10 @@ export class NotificationRoomCreator<
     const revision = membershipRevisionIssuer.ok.currentRevision;
     return Ok(
       [...revision.members()]
-        .filter((member) => member.membership === "join")
+        .filter(
+          (member) =>
+            member.membership === "join" || member.membership === "invite"
+        )
         .map((member) => member.userID)
         .filter((userID) => userID !== draupnirUserID)
     );

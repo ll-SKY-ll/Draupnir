@@ -1,7 +1,7 @@
 // Copyright 2022 - 2024 Gnuxie <Gnuxie@protonmail.com>
 // Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 //
-// SPDX-License-Identifier: AFL-3.0 AND Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 //
 // SPDX-FileAttributionText: <text>
 // This modified file incorporates work from mjolnir
@@ -21,7 +21,7 @@ describe("Test: utils", function () {
   it(
     "replaceRoomIdsWithPills correctly turns a room ID in to a pill",
     async function (this: DraupnirTestContext) {
-      const managementRoomAlias = this.config.managementRoom;
+      const managementRoomAlias = "#moderators:localhost:9999";
       const draupnir = this.draupnir;
       const draupnirMatrixClient = draupnirSafeEmitter();
       if (draupnir === undefined) {

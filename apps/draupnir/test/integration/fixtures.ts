@@ -1,7 +1,7 @@
 // Copyright 2022 - 2024 Gnuxie <Gnuxie@protonmail.com>
 // Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 //
-// SPDX-License-Identifier: AFL-3.0 AND Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 //
 // SPDX-FileAttributionText: <text>
 // This modified file incorporates work from mjolnir
@@ -21,7 +21,6 @@ import {
   draupnir,
   draupnirClient,
   makeBotModeToggle,
-  teardownManagementRoom,
 } from "./mjolnirSetupUtils";
 import { makeTopLevelStores } from "../../src/backingstore/DraupnirStores";
 import { SqliteRoomStateBackingStore } from "../../src/backingstore/better-sqlite3/SqliteRoomStateBackingStore";
@@ -81,7 +80,6 @@ export const mochaHooks = {
       this.timeout(30000);
       this.lifetime = new StandardLifetime();
       const config = (this.config = configRead());
-      this.managementRoomAlias = config.managementRoom;
       const storagePath = getStoragePath(config.dataPath);
       await cleanUpTopLevelStores(storagePath);
       this.stores = makeTopLevelStores(storagePath, DefaultEventDecoder, {
@@ -121,16 +119,6 @@ export const mochaHooks = {
             { references: [] }
           ),
         ]);
-        const client = draupnirClient();
-        // FIXME: I don't believe this EVER runs lmao.
-        // remove alias from management room and leave it.
-        if (client !== null && this.managementRoomAlias !== undefined) {
-          await teardownManagementRoom(
-            client,
-            this.draupnir.managementRoomID,
-            this.managementRoomAlias
-          );
-        }
       }
       console.error(
         "---- completed test",
